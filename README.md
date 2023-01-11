@@ -28,5 +28,5 @@ etc. Module ถัดไปกำลังเรียบเรียงเน�
 
 # Author
 Source Code: https://github.com/kitsana-devsecops/iot-platform.git
-Power By: Kitsana.DevSecOps
-Job Position: System Analyst and Senior Programmer
+<br />Power By: Kitsana.DevSecOps
+<br />Job Position: System Analyst and Senior Programmer
