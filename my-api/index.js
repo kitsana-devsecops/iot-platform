@@ -19,7 +19,13 @@ const port = 8080
 
 //ตั้งค่า Body Parser เพื่อให้สามารถอ่านค่า JSON ได้
 app.use(bodyParser.json())
+
 app.use(cors())
+
+app.use(function (req, res, next) {
+    //console.log(req)
+    next()
+})
 
 //สร้าง connection pool ใหม่และกำหนด configuration เชื่อมต่อ pgSQL
 //credentials กำหนดไว้ที่ไฟล์ .env และเรียกใช้งานผ่าน process.env.VARIABLE_NAME
@@ -178,7 +184,7 @@ app.get('/states', async (req, res) => {
       const pg_res = await client.query(text, values)
 
       //แสดง Query results ที่ console
-      console.log(pg_res.rows)
+      //console.log(pg_res.rows)
 
       //ส่ง response status และ json playload ให้ client
       res.status(200).send(pg_res.rows)
@@ -209,18 +215,20 @@ app.post('/states', async (req, res) => {
     { 
         "id": "TEXT",
         "name": "TEXT",
+        "node": "TEXT",
         "value": "TEXT"
     }*/
      
     //ประกาศตัวแปรชื่อ text และเก็บ query string
-    const text = `INSERT INTO public.component_states(cid, cname, cvalue, date_time)
-    VALUES ($1, $2, $3, CURRENT_TIMESTAMP) RETURNING *;`
+    const text = `INSERT INTO public.component_states(cid, cname, cvalue, nodeid, date_time)
+    VALUES ($1, $2, $3, $4,CURRENT_TIMESTAMP) RETURNING *;`
     
     //ประกาศตัวแปร array ชื่อ values เก็บข้อมูลที่ใช้ใน query string โดย map กับ ${NUMBER}
     const values = [
         req.body.id,     //$1
         req.body.name,   //$2
         req.body.value,  //$3
+        req.body.node,   //$4
     ]
     
     //สร้างการเชื่อมต่อ pgSQL database ผ่าน pool

@@ -8,6 +8,7 @@ async function handleClick(checked,data) {
   let payload = {
     id: data.id,
     name:data.name,
+    node:data.node,
     value: (checked?1:0)
   }
 
@@ -20,7 +21,7 @@ async function handleClick(checked,data) {
     body: JSON.stringify(payload)
   };
 
-  await fetch("http://localhost:8080/states", requestOptions)
+  fetch(process.env.REACT_APP_REST_URL+"/states", requestOptions)
     .then(response => response.text())
     .then(result => console.log(result))
     .catch(error => console.log('error', error));
@@ -60,9 +61,9 @@ const Android12Switch = styled(Switch)(({ theme }) => ({
   },
 }));
 
-export default function MUISwitchStyle1(props) {
+function MUISwitchStyle1(props) {
 
-  const [checked, setChecked] = React.useState(true);
+  const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(event.target.checked);
@@ -71,8 +72,24 @@ export default function MUISwitchStyle1(props) {
 
   return (
     <FormControlLabel
-      control={<Android12Switch onChange={handleChange} defaultChecked />}
+      control={<Android12Switch onChange={handleChange} checked={props.data.status}/>}
       label={props.data.name}
     />
   );
 }
+
+function areEqual(prevProps, nextProps) {
+  return prevProps === nextProps;
+  /*
+  return true if passing nextProps to render would return
+  the same result as passing prevProps to render,
+  otherwise return false
+  */
+}
+
+export default React.memo(MUISwitchStyle1, areEqual);
+/*To use React.memo, you can wrap your functional component with it and 
+pass a comparison function as an argument. The comparison function will 
+be used to determine whether the component should re-render or not. If 
+the comparison function returns true, the component will re-render. If it 
+returns false, the component will not re-render.*/

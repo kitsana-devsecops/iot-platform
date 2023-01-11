@@ -6,10 +6,9 @@ import { ThemeProvider } from '@mui/material/styles';
 
 function App() {
   return (
-  
-      <div className="App">
-        <Dashboard/>
-      </div>
+    <div className="App">
+      <Dashboard/>
+    </div>
   );
 }
 

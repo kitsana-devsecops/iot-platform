@@ -75,8 +75,7 @@ const IOSSlider = styled(Slider)(({ theme }) => ({
 
 export default function CustomizedSlider() {
   return (
-    <Slider
-  sx={{
+    <Slider sx={{
     '& input[type="range"]': {
       WebkitAppearance: 'slider-vertical',
     },

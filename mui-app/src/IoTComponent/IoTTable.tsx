@@ -1,4 +1,7 @@
-import React, {useEffect, useState} from "react";
+import * as React from 'react';
+
+import {useState} from "react";
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';

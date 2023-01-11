@@ -20,10 +20,13 @@ function CircularProgressWithLabel(
 ) {
 
   return (
+
     <ThemeProvider theme={theme}>
+
       <Typography variant="subtitle2">
         {props.label}
       </Typography>
+      
       <Box sx={{ position: 'relative', display: 'inline-flex' }}>
         
         <CircularProgress size={115} thickness={8} variant="determinate" {...props} />
