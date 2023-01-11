@@ -20,12 +20,17 @@ const port = 8080
 //ตั้งค่า Body Parser เพื่อให้สามารถอ่านค่า JSON ได้
 app.use(bodyParser.json())
 
+//เรียกใช้งาน cors origin function
 app.use(cors())
 
-app.use(function (req, res, next) {
-    //console.log(req)
-    next()
-})
+/*app.use(function (req, res, next) {
+    console.log(req.header('x-api-key'))
+    if(req.header('x-api-key')===process.env.APIKEY){
+        next()
+    }else{
+        res.status(401).send('Unauthorize')
+    }
+})*/
 
 //สร้าง connection pool ใหม่และกำหนด configuration เชื่อมต่อ pgSQL
 //credentials กำหนดไว้ที่ไฟล์ .env และเรียกใช้งานผ่าน process.env.VARIABLE_NAME
@@ -43,15 +48,6 @@ pool.on('error', (err, client) => {
  console.error('Unexpected error on idle client', err);
  process.exit(-1);
 })
- 
-/*app.use(function (req, res, next) {
-    console.log(req.header('x-api-key'))
-    if(req.header('x-api-key')===process.env.APIKEY){
-        next()
-    }else{
-        res.status(401).send('Unauthorize')
-    }
-})*/
 
 //app เป็น object และมี function ชื่อเดียวกับ HTTP Method
 //ตัวอย่างคือ `.get()` เหมือนกับ GET
