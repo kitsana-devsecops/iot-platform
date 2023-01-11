@@ -92,6 +92,7 @@ export default function Dashboard() {
 
         const sensors_json = await sensors_resp.json();
 
+        //ตรวจสอบการ update ข้อมูล sensors จากบอร์ด ESP8266, ถ้ามีการ update ให้ทำงานตามที่กำหนด
         if (JSON.stringify(previousSensors.current) !== JSON.stringify(sensors_json) && sensors_json.length > 0) {
 
           setSensors(sensors_json)
@@ -116,7 +117,8 @@ export default function Dashboard() {
           }
         })
         const states_json = await states_resp.json();
-      
+
+        //ตรวจสอบการ update ข้อมูล UI states, ถ้ามีการ update ให้ทำงานตามที่กำหนด
         if (JSON.stringify(previousStates.current) !== JSON.stringify(states_json) && states_json.length > 0) {
 
           const uisw1 = states_json.find(element => element.cid == 'iotsw1' && element.nodeid == node)
